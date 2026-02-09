@@ -1,0 +1,328 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+body{
+  background:url('../img/background.jpeg') no-repeat center center fixed;
+  background-size:cover;
+  color:#fff;
+}
+
+/* === NEON === */
+.neon-text{
+  color:#00ff88;
+  text-shadow:
+    0 0 5px #00ff88,
+    0 0 15px #00ff88,
+    0 0 30px #00ff88;
+}
+
+.neon-title{
+  color:#00ff88;
+  text-shadow:
+    0 0 10px #00ff88,
+    0 0 30px #00ff88;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  background:rgba(0,0,0,.75);
+}
+
+.top-right{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.saldo{
+  background:#0f5132;
+  padding:6px 12px;
+  border-radius:20px;
+}
+
+/* PERFIL */
+.perfil{
+  position:relative;
+  cursor:pointer;
+}
+
+.perfil-icon{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#00ff88,#00cc6a);
+  box-shadow:0 0 12px #00ff88;
+}
+
+.menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:42px;
+  background:#111;
+  border-radius:12px;
+  overflow:hidden;
+}
+.perfil:hover .menu{display:block}
+.menu a{
+  display:block;
+  padding:10px 16px;
+  color:#fff;
+  text-decoration:none;
+}
+.menu a:hover{background:#198754}
+
+/* MAIN */
+main{text-align:center;padding:40px 15px}
+.sub{opacity:.85;margin-bottom:18px}
+
+.pix-btn{
+  background:#00ff88;
+  border:none;
+  padding:12px 26px;
+  border-radius:26px;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 0 18px #00ff88;
+  margin-bottom:26px;
+}
+
+.raspas{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:18px;
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  position:relative;
+  height:120px;
+  background:#222;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.card span{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.card canvas{
+  position:absolute;
+  inset:0;
+}
+
+/* PRESENTE DIREITO */
+.gift-fixed-right{
+  position:fixed;
+  right:15px;
+  bottom:15px;
+  font-size:42px;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+/* TOPO NOTIFICAÇÃO */
+.top-notify{
+  position:fixed;
+  left:15px;
+  top:80px;
+  background:rgba(0,0,0,.85);
+  padding:10px;
+  border-radius:14px;
+  width:260px;
+  display:none;
+  box-shadow:0 0 20px rgba(0,255,136,.4);
+  z-index:999;
+}
+.top-notify img{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  border:1.5px solid #00ff88;
+  float:left;
+  margin-right:8px;
+}
+
+.top-notify span{
+  color:#00ff88;
+  font-weight:bold;
+}
+
+/* LIVE WIDGET */
+.live-widget{
+  position:fixed;
+  right:15px;
+  bottom:100px;
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  padding:10px;
+  width:220px;
+  box-shadow:0 0 25px rgba(0,255,136,.4);
+}
+.live-avatars{
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+.live-avatars img{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:2px solid #00ff88;
+  object-fit:cover;
+}
+
+/* COOKIES */
+#cookieBox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:9999;
+}
+.cookie-actions button{
+  margin:6px;
+  padding:10px 22px;
+  border:none;
+  border-radius:22px;
+}
+.recusar{background:#555;color:#fff}
+
+.legal{opacity:.75;margin-top:18px}
+
+/* WIDGET AO VIVO - RODAPÉ CENTRAL */
+.live-widget{
+  position:fixed;
+  bottom:5px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:999;
+}
+
+/* TEXTO AO VIVO BEM MAIS ABAIXO */
+.live-widget::before{
+  content:"🔴 AO VIVO";
+  color:#ff3b3b;
+  font-weight:700;
+  font-size:13px;
+  animation:pulseLive 1.2s infinite;
+  transform:translateY(18px); /* CONTROLA A ALTURA */
+}
+
+
+@keyframes pulseLive{
+  0%{opacity:1}
+  50%{opacity:.4}
+  100%{opacity:1}
+}
+
+/* AVATARES */
+.live-avatars{
+  display:flex;
+  gap:8px;
+}
+
+.live-avatars img{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 0 8px rgba(255,59,59,.8);
+}
+
+/* AJUSTE FINAL - WIDGET AO VIVO LIMPO */
+.live-widget{
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* POSIÇÃO MAIS BAIXA */
+.live-widget{
+  bottom:-10px !important;
+}
+
+/* TEXTO AO VIVO MAIS ABAIXO */
+.live-widget::before{
+  margin-bottom:10px;
+}
+
+
+/* AO VIVO TOTALMENTE TRANSPARENTE */
+.live-widget{
+  background:transparent !important;
+  box-shadow:none !important;
+  filter:none !important;
+  backdrop-filter:none !important;
+  padding:0 !important;
+}
+
+/* TEXTO AO VIVO MAIS ABAIXO */
+.live-widget::before{
+  margin-bottom:16px !important;
+  font-size:13px;
+}
+
+/* ===== AJUSTE FINAL AO VIVO (SOBE TUDO) ===== */
+
+.live-widget{
+  position:fixed;
+  left:50%;
+  bottom:28px !important; /* SOBE O BLOCO */
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  background:transparent !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  padding:0 !important;
+  z-index:999;
+}
+
+/* FOTOS AO VIVO */
+.live-avatars{
+  display:flex;
+  gap:8px;
+  margin-bottom:6px; /* sobe as fotos */
+}
+
+.live-avatars img{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 0 8px rgba(255,59,59,.7);
+}
+
+/* TEXTO AO VIVO */
+.live-widget::before{
+  content:"🔴 AO VIVO";
+  color:#ff3b3b;
+  font-weight:700;
+  font-size:13px;
+  animation:pulseLive 1.2s infinite;
+  margin-bottom:4px; /* aproxima do avatar */
+}

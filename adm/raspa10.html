@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Raspadinha Eletrônicos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#050608;
+  --card:#0b1118;
+  --green:#2dff6a;
+  --green-dark:#18c95b;
+  --text:#fff;
+  --muted:#9aa0a6;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(5,6,8,.55), rgba(5,6,8,.65)),
+    url('/img/background.jpeg') center/cover fixed no-repeat;
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  background:linear-gradient(180deg,#050608,#030406);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:1000;
+}
+
+.logo img{height:42px;}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.saldo{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#0b1118;
+  padding:6px 10px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:14px;
+}
+
+.saldo span{color:var(--green);}
+
+.btn-depositar{
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  padding:6px 12px;
+  border-radius:9px;
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.menu-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#0f1720;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.menu{
+  position:absolute;
+  top:75px;
+  right:20px;
+  width:210px;
+  background:#0b1118;
+  border-radius:14px;
+  padding:10px;
+  display:none;
+}
+
+.menu a{
+  display:block;
+  padding:12px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.menu a:hover{background:#121a24;}
+
+/* ===== MAIN ===== */
+main{
+  padding:110px 16px 80px;
+  display:flex;
+  justify-content:center;
+}
+
+/* ===== RASPADINHA ===== */
+.container{
+  width:360px;
+  background:#0a0a0a;
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 0 40px rgba(0,255,150,.35);
+}
+
+.card{
+  position:relative;
+  width:100%;
+  height:320px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#000;
+}
+
+.prize-grid{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+}
+
+.cell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle,#00ff88,#00b35c);
+}
+
+.cell img{
+  width:75%;
+  max-height:75%;
+  object-fit:contain;
+}
+
+canvas{
+  position:absolute;
+  inset:0;
+}
+
+.result{
+  display:none;
+  margin-top:14px;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.win{color:#1aff5c;}
+.lose{color:#ff4d4d;}
+
+/* ===== PRÊMIO ===== */
+.prizes-section{
+  margin-top:26px;
+  background:#1a1a1a;
+  border-radius:18px;
+  padding:16px;
+}
+
+.prizes-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.prizes-sub{
+  text-align:center;
+  font-size:13px;
+  color:#bbb;
+  margin:6px 0 14px;
+}
+
+.prizes-grid{
+  display:flex;
+  justify-content:center;
+}
+
+.prize-card{
+  background:#0f2b22;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  width:160px;
+}
+
+.prize-card img{
+  width:100%;
+  max-height:90px;
+  object-fit:contain;
+}
+
+.prize-card span{
+  font-size:15px;
+  font-weight:bold;
+  color:#1aff5c;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  margin-top:40px;
+  background:#050608;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:28px 16px;
+  text-align:center;
+}
+
+footer p{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* ===== X ANIMADO ===== */
+.x-icon{
+  font-size:48px;
+  color:#ff4d4d;
+  font-weight:900;
+  animation:xPulse .9s infinite;
+}
+
+@keyframes xPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+/* ===== MENSAGEM PERDEU ===== */
+.lose-box{
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.play-again{
+  margin-top:12px;
+  padding:10px 16px;
+  border-radius:12px;
+  background:#1a1a1a;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* ===== AVISO IMPORTANTE ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,6,8,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.aviso-box{
+  background:linear-gradient(180deg,#0b1118,#050608);
+  border-radius:20px;
+  padding:22px;
+  width:320px;
+  text-align:center;
+  animation:popIn .6s ease;
+  box-shadow:0 0 40px rgba(0,255,150,.35);
+}
+
+@keyframes popIn{
+  from{transform:scale(.85);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.aviso-box h2{
+  color:#2dff6a;
+  margin-bottom:10px;
+}
+
+.aviso-box p{
+  font-size:14px;
+  color:#ccc;
+  line-height:1.5;
+}
+
+.btn-aceitar{
+  margin-top:16px;
+  background:linear-gradient(135deg,#2dff6a,#18c95b);
+  color:#000;
+  padding:12px;
+  border-radius:14px;
+  font-weight:800;
+  cursor:pointer;
+  animation:pulseBtn 1.4s infinite;
+}
+
+@keyframes pulseBtn{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="aviso">
+  <div class="aviso-box">
+    <h2>⚠️ Aviso Importante</h2>
+    <p>
+      Você está prestes a iniciar sua <strong>Raspadinha Comun</strong>.<br><br>
+      O resultado é <strong>aleatório</strong> e o prêmio pode variar conforme a sorte do jogo.
+    </p>
+
+    <div class="btn-aceitar" onclick="aceitarRaspagem()">
+      Aceitar e Raspar 🎉
+    </div>
+  </div>
+</div>
+
+
+<header>
+  <div class="logo"><img src="/img/logo.jpeg"></div>
+  <div class="header-right">
+    <div class="saldo">💰 R$ <span>10,00</span></div>
+    <div class="btn-depositar">Depositar</div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <div class="menu" id="menu">
+    <a href="index.html">🏠 Início</a>
+    <a href="deposito.html">💰 Depósito</a>
+    <a href="sacar.html">💸 Saque</a>
+    <a href="cliente.html">👤 Conta</a>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+  <div class="card">
+    <div class="prize-grid" id="grid"></div>
+    <canvas id="scratch"></canvas>
+  </div>
+
+  <div id="result" class="result"></div>
+
+   <div class="prizes-section">
+    <div class="prizes-title">🏆 Prêmios</div>
+    <div class="prizes-sub">Confira os prêmios disponíveis</div>
+
+    <div class="prizes-grid">
+      <div class="prize-card"><img src="/img/100.webp"><span></span></div>
+      <div class="prize-card"><img src="/img/50.webp"><span></span></div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <p><strong>Raspadinha Eletrônicos</strong></p>
+  <p>Entretenimento digital • Prêmio instantâneo</p>
+  <p>© 2026 Todos os direitos reservados</p>
+</footer>
+
+<script>
+function toggleMenu(){
+  const m=document.getElementById("menu");
+  m.style.display=m.style.display==="block"?"none":"block";
+}
+
+const canvas=document.getElementById('scratch');
+const ctx=canvas.getContext('2d');
+const card=document.querySelector('.card');
+const grid=document.getElementById('grid');
+const result=document.getElementById('result');
+
+const chancePerder = 0.1; // 80% perde / 20% ganha
+const premio = 100;
+
+/* ===== GRID ===== */
+function montarGrid(ganhou){
+  grid.innerHTML="";
+  for(let i=0;i<9;i++){
+    const cell=document.createElement('div');
+    cell.className='cell';
+
+    if(ganhou){
+      cell.innerHTML = `<img src="/img/100.webp">`;
+    }else{
+      cell.innerHTML = `<div class="x-icon">✖</div>`;
+    }
+
+    grid.appendChild(cell);
+  }
+}
+
+canvas.width=card.offsetWidth;
+canvas.height=card.offsetHeight;
+ctx.fillStyle='#bdbdbd';
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+let scratching=false,finished=false;
+
+canvas.onmousedown=e=>{scratching=true; scratch(e.offsetX,e.offsetY);}
+canvas.onmousemove=e=>{
+  if(scratching && !finished){
+    scratch(e.offsetX,e.offsetY);
+    check();
+  }
+}
+window.onmouseup=()=>scratching=false;
+
+function scratch(x,y){
+  ctx.globalCompositeOperation='destination-out';
+  ctx.beginPath();
+  ctx.arc(x,y,28,0,Math.PI*2);
+  ctx.fill();
+}
+
+function check(){
+  const d=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  let c=0;
+  for(let i=3;i<d.length;i+=4) if(d[i]===0) c++;
+
+  if(c/(canvas.width*canvas.height)*100>45){
+    finished=true;
+    canvas.style.display='none';
+
+    const perdeu = Math.random() < chancePerder;
+
+    if(perdeu){
+      montarGrid(false);
+      result.innerHTML=`
+        <div class="lose-box">
+          <div class="x-icon">✖</div>
+          <div>Não foi dessa vez</div>
+          <div class="play-again" onclick="location.reload()">Jogar novamente</div>
+        </div>
+      `;
+      result.className='result lose';
+    }else{
+      montarGrid(true);
+
+      localStorage.setItem("premioValor", premio);
+
+      result.innerHTML=`
+        <div class="win">
+          🎉 Parabéns!<br>
+          Você ganhou <strong>R$ ${premio},00</strong><br><br>
+          <div class="play-again" onclick="window.location.href='sacar.html'">
+            💸 Sacar agora
+          </div>
+        </div>
+      `;
+      result.className='result win';
+    }
+
+    result.style.display='block';
+  }
+}
+
+function aceitarRaspagem(){
+  document.getElementById('aviso').style.display='none';
+}
+</script>

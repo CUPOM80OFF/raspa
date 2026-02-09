@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Raspada Milionária</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#050608;
+  --card:#0b1118;
+  --green:#2dff6a;
+  --green-dark:#18c95b;
+  --text:#fff;
+  --muted:#9aa0a6;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  background:linear-gradient(180deg,#050608,#030406);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:1000;
+}
+
+.logo img{height:40px;}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* SALDO */
+.saldo{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#0b1118;
+  padding:6px 10px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:14px;
+}
+
+.saldo span{color:var(--green);}
+
+.coin{
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.2)}
+}
+
+/* BOTÃO */
+.btn-depositar{
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  padding:6px 12px;
+  border-radius:9px;
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.menu-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#0f1720;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* MENU */
+.menu{
+  position:absolute;
+  top:75px;
+  right:20px;
+  width:210px;
+  background:#0b1118;
+  border-radius:14px;
+  padding:10px;
+  display:none;
+}
+
+.menu a{
+  display:block;
+  padding:12px;
+  color:#fff;
+  text-decoration:none;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.menu a:hover{background:#121a24;}
+.menu .sair{color:#ff4d4d;}
+
+/* MAIN */
+main{
+  padding:110px 18px 120px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* SLIDER */
+.slider-box{
+  width:100%;
+  overflow:hidden;
+  border-radius:18px;
+  margin-bottom:28px;
+}
+
+.slider-track{
+  display:flex;
+  width:400%;
+  transition:transform 1s ease;
+}
+
+.slide{
+  width:100%;
+  height:190px;
+  background-size:cover;
+  background-position:center;
+}
+
+/* TITULO NEON */
+.neon{
+  text-align:center;
+  font-size:26px;
+  margin-bottom:18px;
+  color:var(--green);
+  text-shadow:0 0 8px var(--green),0 0 18px var(--green);
+  animation:neonGlow 2s infinite alternate;
+}
+
+@keyframes neonGlow{
+  from{opacity:.8}
+  to{opacity:1}
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+}
+
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:14px;
+}
+
+.card h3{
+  margin:10px 0 4px;
+  font-size:15px;
+}
+
+.card p{
+  font-size:13px;
+  color:var(--muted);
+  flex:1;
+}
+
+.card button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* ===== SITE FOOTER (NOVO) ===== */
+.site-footer{
+  background:#050608;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:50px 20px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:40px;
+}
+
+.site-footer-left{
+  max-width:420px;
+}
+
+.site-footer-left img{
+  width:170px;
+  margin-bottom:14px;
+}
+
+.site-footer-left p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.site-footer-right{
+  display:flex;
+  gap:80px;
+  flex-wrap:wrap;
+}
+
+.site-footer-col h4{
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.site-footer-col a{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:8px;
+}
+
+.site-footer-col a:hover{
+  color:var(--green);
+}
+
+/* FOOTER FLUTUANTE */
+.footer{
+  position:fixed;
+  bottom:14px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+  pointer-events:none;
+}
+
+.live-box{
+  pointer-events:auto;
+  background:#0b1118;
+  padding:8px 14px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.live{
+  color:#ff3b3b;
+  font-weight:700;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{50%{opacity:.4}}
+
+.avatars img{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  border:2px solid var(--green);
+  margin-left:-8px;
+}
+
+.gift{
+  pointer-events:auto;
+  background:#0b1118;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  animation:float 2s infinite;
+}
+
+@keyframes float{50%{transform:translateY(-6px)}}
+
+.badge{
+  position:absolute;
+  top:4px;
+  right:6px;
+  background:red;
+  color:#fff;
+  font-size:12px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><img src="img/logo.jpeg"></div>
+  <div class="header-right">
+    <div class="saldo"><span class="coin">💰</span>R$ <span>0,00</span></div>
+    <div class="btn-depositar" onclick="go('deposito.html')">Depositar</div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </div>
+
+  
+  <div class="menu" id="menu">
+    <a href="index.html">🏠 Início</a>
+    <a href="deposito.html">💰 Depósito</a>
+    <a href="sacar.html">💸 Saque</a>
+    <a href="cliente.html">👤 Conta</a>
+  </div>
+</header>
+
+<main>
+  <h2 class="neon">Destaques</h2>
+
+  <div class="slider-box">
+    <div class="slider-track" id="slider">
+      <div class="slide" style="background-image:url('img/principal.webp')"></div>
+      <div class="slide" style="background-image:url('img/principal1.webp')"></div>
+      <div class="slide" style="background-image:url('img/principal2.webp')"></div>
+      <div class="slide" style="background-image:url('img/principal3.webp')"></div>
+    </div>
+  </div>
+
+  <h2 class="neon">Jogue agora</h2>
+
+  <div class="cards">
+  <div class="card">
+    <img src="img/premio.webp">
+    <h3>Raspadinha comum</h3>
+    <p>Prêmios até R$ 150,00</p>
+    <button onclick="location.href='deposito.html'">
+      Jogar R$ 10,00
+    </button>
+  </div>
+
+  <div class="card">
+    <img src="img/premio.webp">
+    <h3>Raspadinha Top</h3>
+    <p>Prêmios até R$ 250,00</p>
+    <button onclick="location.href='deposito.html'">
+      Jogar R$ 20,00
+    </button>
+  </div>
+
+  <div class="card">
+    <img src="img/premio.webp">
+    <h3>Raspadinha Premium</h3>
+    <p>Prêmios até R$ 1.500,00</p>
+    <button onclick="location.href='deposito.html'">
+      Jogar R$ 50,00
+    </button>
+  </div>
+
+  <div class="card">
+    <img src="img/premio.webp">
+    <h3>Raspa Pop</h3>
+    <p>Prêmios até R$ 10.000,00</p>
+    <button onclick="location.href='deposito.html'">
+      Jogar R$ 100,00
+    </button>
+  </div>
+</div>
+
+</main>
+
+<!-- NOVO RODAPÉ -->
+<footer class="site-footer">
+  <div class="site-footer-left">
+    <img src="img/rodape.jpeg">
+    <p>Raspou, levou! é a maior e melhor plataforma de raspadinhas do Brasil.</p>
+    <p style="margin-top:10px;">© 2026 Raspou, levou!. Todos os direitos reservados.</p>
+  </div>
+
+  <div class="site-footer-right">
+    <div class="site-footer-col">
+      <h4>Raspadinhas</h4>
+      <a href="#">Raspadinhas</a>
+      <a href="#">Carrinho</a>
+    </div>
+    <div class="site-footer-col">
+      <h4>Conta</h4>
+      <a href="#">Carteira</a>
+      <a href="#">Depósito</a>
+      <a href="#">Saques</a>
+    </div>
+    <div class="site-footer-col">
+      <h4>Legal</h4>
+      <a href="#">Termos de Uso</a>
+      <a href="#">Política de Privacidade</a>
+      <a href="#">Termos de Bônus</a>
+    </div>
+  </div>
+</footer>
+
+<div class="footer">
+  <div></div>
+  <div class="live-box">
+    <span class="live">● AO VIVO</span>
+    <div class="avatars">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg">
+      <img src="https://randomuser.me/api/portraits/men/76.jpg">
+    </div>
+  </div>
+  <div class="gift">🎁<div class="badge">1</div></div>
+</div>
+
+<script>
+let i=0;
+setInterval(()=>{
+  i=(i+1)%4;
+  document.getElementById("slider").style.transform=`translateX(-${i*25}%)`;
+},4000);
+
+function toggleMenu(){
+  const m=document.getElementById("menu");
+  m.style.display=m.style.display==="block"?"none":"block";
+}
+function go(p){location.href=p;}
+</script>
+
+</body>
+</html>

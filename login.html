@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Login | Raspada Milionária</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#020305;
+  --card:#0a1017;
+  --green:#2dff6a;
+  --green-dark:#18c95b;
+  --text:#ffffff;
+  --muted:#7a7f86;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:75px;
+  background:#020305;
+  display:flex;
+  align-items:center;
+  padding:0 30px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:1000;
+}
+
+header img{height:44px}
+
+/* MAIN */
+.main{
+  display:flex;
+  justify-content:center;
+  padding:120px 20px 60px;
+}
+
+/* SLIDER */
+.slider-box{
+  width:100%;
+  max-width:520px;
+  overflow:hidden;
+  border-radius:18px;
+  margin-bottom:22px;
+}
+
+.slider-track{
+  display:flex;
+  width:300%;
+  transition:transform 0.9s cubic-bezier(.4,0,.2,1);
+}
+
+.slide{
+  width:100%;
+  height:160px;
+  background-size:cover;
+  background-position:center;
+}
+
+/* CARD */
+.auth-wrapper{
+  width:100%;
+  max-width:430px;
+}
+
+.auth-card{
+  background:var(--card);
+  border-radius:18px;
+  padding:38px;
+  box-shadow:0 0 70px rgba(0,0,0,.9);
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(15px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+.auth-card h1{font-size:26px;margin-bottom:6px}
+.auth-card p{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+.input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#020305;
+  color:#fff;
+  margin-bottom:14px;
+}
+
+.input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 2px rgba(45,255,106,.18);
+}
+
+.btn-main{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:8px;
+  box-shadow:0 0 28px rgba(45,255,106,.45);
+}
+
+/* TOGGLE */
+.toggle{
+  margin-top:20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.toggle span{color:var(--green);cursor:pointer;font-weight:600}
+
+/* STORES */
+.stores{
+  margin-top:26px;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+.stores img{height:44px}
+
+.hidden{display:none}
+
+/* NOTIFICAÇÃO */
+.notify{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:#000;
+  padding:14px 22px;
+  border-radius:12px;
+  font-weight:700;
+  box-shadow:0 0 30px rgba(45,255,106,.6);
+  z-index:9999;
+  animation:slide .4s ease;
+}
+
+@keyframes slide{
+  from{opacity:0;transform:translateX(30px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* FOOTER */
+.footer{
+  background:#020305;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:40px 30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:40px;
+}
+
+.footer-left{max-width:420px}
+.footer-left img{width:160px;margin-bottom:14px}
+.footer-left p{font-size:13px;color:var(--muted);line-height:1.6}
+
+.footer-right{display:flex;gap:80px;flex-wrap:wrap}
+
+.footer-column h4{font-size:14px;margin-bottom:12px}
+.footer-column a{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:8px;
+}
+.footer-column a:hover{color:var(--green)}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="img/logo.jpeg" alt="Logo">
+</header>
+
+<main class="main">
+<div class="auth-wrapper">
+
+<div class="slider-box">
+  <div class="slider-track" id="sliderTrack">
+    <div class="slide" style="background-image:url('img/principal.webp')"></div>
+    <div class="slide" style="background-image:url('img/principal1.webp')"></div>
+    <div class="slide" style="background-image:url('img/principal2.webp')"></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="auth-card" id="loginBox">
+  <h1>Entrar</h1>
+  <p>Acesse sua conta para continuar</p>
+
+  <input class="input" type="email" id="loginEmail" placeholder="E-mail">
+  <input class="input" type="password" id="loginSenha" placeholder="Senha">
+  <button class="btn-main" onclick="login()">Entrar</button>
+
+  <div class="toggle">
+    Não tem conta? <span onclick="toggleAuth()">Cadastrar</span>
+  </div>
+
+  <div class="stores">
+    <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83">
+  </div>
+</div>
+
+<!-- CADASTRO -->
+<div class="auth-card hidden" id="registerBox">
+  <h1>Cadastrar</h1>
+  <p>Crie sua conta agora</p>
+
+  <input class="input" id="regNome" placeholder="Nome completo">
+  <input class="input" type="email" id="regEmail" placeholder="E-mail">
+  <input class="input" type="password" id="regSenha" placeholder="Senha">
+
+  <button class="btn-main" onclick="cadastrar()">Cadastrar</button>
+
+  <div class="toggle">
+    Já tem conta? <span onclick="toggleAuth()">Entrar</span>
+  </div>
+
+  <div class="stores">
+    <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83">
+  </div>
+</div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img src="img/rodape.jpeg">
+    <p>Raspou, levou! é a maior e melhor plataforma de raspadinhas do Brasil.</p>
+    <p style="margin-top:10px;">© 2026 Raspou, levou!. Todos os direitos reservados.</p>
+  </div>
+
+  <div class="footer-right">
+    <div class="footer-column">
+      <h4>Raspadinhas</h4>
+      <a href="#">Raspadinhas</a>
+      <a href="#">Carrinho</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Conta</h4>
+      <a href="#">Carteira</a>
+      <a href="#">Depósito</a>
+      <a href="#">Saques</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Legal</h4>
+      <a href="#">Termos de Uso</a>
+      <a href="#">Política de Privacidade</a>
+      <a href="#">Termos de Bônus</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+let slideIndex = 0;
+setInterval(()=>{
+  slideIndex = (slideIndex + 1) % 3;
+  sliderTrack.style.transform = `translateX(-${slideIndex * 33.3333}%)`;
+},4000);
+
+function toggleAuth(){
+  loginBox.classList.toggle("hidden");
+  registerBox.classList.toggle("hidden");
+}
+
+function notify(msg){
+  const n=document.createElement("div");
+  n.className="notify";
+  n.innerText=msg;
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),2200);
+}
+
+function emailValido(email){
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  return regex.test(email);
+}
+
+function notify(msg){
+  const n = document.createElement("div");
+  n.className = "notify";
+  n.innerText = msg;
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),2200);
+}
+
+function login(){
+  const email = loginEmail.value.trim();
+  const senha = loginSenha.value.trim();
+
+  if(!email || !senha){
+    alert("Preencha e-mail e senha corretamente.");
+    return;
+  }
+
+  if(!emailValido(email)){
+    alert("Digite um e-mail válido.");
+    return;
+  }
+
+  notify("Entrada autorizada ✅");
+  setTimeout(()=>location.href="index.html",1800);
+}
+
+function cadastrar(){
+  const nome = regNome.value.trim();
+  const email = regEmail.value.trim();
+  const senha = regSenha.value.trim();
+
+  if(!nome || !email || !senha){
+    alert("Preencha todos os campos para continuar.");
+    return;
+  }
+
+  if(!emailValido(email)){
+    alert("Digite um e-mail válido.");
+    return;
+  }
+
+  if(senha.length < 6){
+    alert("A senha deve ter no mínimo 6 caracteres.");
+    return;
+  }
+
+  notify("Cadastro realizado com sucesso ✅");
+  setTimeout(()=>location.href="index.html",1800);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Saque | Raspa Green</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#050608;
+  --card:#0c121a;
+  --green:#2dff6a;
+  --green2:#18c95b;
+  --text:#fff;
+  --muted:#9aa0a6;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:72px;
+  background:linear-gradient(180deg,#050608,#030406);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  z-index:1000;
+}
+
+.logo img{height:40px;}
+
+.top-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.saldo{
+  background:#0c121a;
+  padding:8px 16px;
+  border-radius:20px;
+  font-weight:800;
+  color:var(--green);
+}
+
+.menu-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#0f1720;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.menu{
+  position:absolute;
+  top:72px;
+  right:20px;
+  background:#0c121a;
+  border-radius:16px;
+  width:200px;
+  display:none;
+  box-shadow:0 0 50px rgba(0,0,0,.7);
+}
+
+.menu a{
+  display:block;
+  padding:14px;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.menu a:hover{background:rgba(255,255,255,.06);}
+
+/* ===== MAIN ===== */
+main{
+  padding:110px 16px 160px;
+  max-width:520px;
+  margin:auto;
+}
+
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:26px;
+  box-shadow:0 0 60px rgba(0,0,0,.6);
+  margin-bottom:18px;
+}
+
+h1{
+  font-size:24px;
+  margin-bottom:6px;
+}
+
+.sub{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:18px;
+}
+
+/* ===== FORM ===== */
+label{
+  font-size:13px;
+  color:var(--muted);
+}
+
+input, select{
+  width:100%;
+  margin-top:6px;
+  margin-bottom:16px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#050608;
+  color:#fff;
+}
+
+input:focus, select:focus{
+  border-color:var(--green);
+}
+
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+  color:#000;
+}
+
+/* ===== REGRAS ===== */
+.rules{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* ===== HISTÓRICO ===== */
+.history{
+  display:none;
+}
+
+.history-item{
+  background:#050608;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
+}
+
+.status{
+  color:var(--green);
+  font-weight:800;
+  font-size:13px;
+}
+
+/* ===== MODAL ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.modal{
+  background:#0c121a;
+  padding:30px;
+  border-radius:22px;
+  text-align:center;
+  max-width:360px;
+  animation:pop .4s ease;
+  box-shadow:0 0 80px rgba(45,255,106,.25);
+}
+
+.modal h2{color:var(--green);}
+
+@keyframes pop{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#030406;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:26px 16px;
+  text-align:center;
+}
+
+.footer-logo img{
+  height:44px;
+  margin-bottom:10px;
+}
+
+.footer-info{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.footer-info strong{
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><img src="img/logo.jpeg"></div>
+
+  <div class="top-right">
+    <div class="saldo">💰 R$ 0,00</div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <div class="menu" id="menu">
+    <a href="index.html">🏠 Início</a>
+    <a href="deposito.html">💰 Depósito</a>
+    <a href="sacar.html">💸 Saque</a>
+    <a href="cliente.html">👤 Conta</a>
+  </div>
+</header>
+
+<main>
+
+  <div class="card">
+    <h1>Saque via PIX</h1>
+    <p class="sub">Processamento imediato após confirmação.</p>
+
+    <label>Tipo de chave</label>
+    <select>
+      <option>CPF</option>
+      <option>Telefone</option>
+      <option>E-mail</option>
+      <option>Aleatória</option>
+    </select>
+
+    <label>Chave PIX</label>
+    <input placeholder="Chave PIX do titular da conta">
+
+    <label>Valor do saque</label>
+    <input type="number" id="valor" placeholder="Mínimo R$ 20,00">
+
+    <button onclick="sacar()">Solicitar Saque</button>
+  </div>
+
+  <div class="card">
+    <h2>Regras de Saque</h2>
+    <div class="rules">
+      • A conta deve estar vinculada ao mesmo CPF da chave PIX.<br>
+      • Não são permitidos saques para terceiros.<br>
+      • Apenas 1 saque pode estar em processamento por vez.<br>
+      • O valor mínimo para saque é R$ 20,00.<br>
+      • Saques via PIX são processados imediatamente após aprovação.<br>
+      • Operações seguem políticas de prevenção à fraude e LGPD.
+    </div>
+  </div>
+
+  <div class="card history" id="history">
+    <h2>Histórico de Saques</h2>
+    <div id="historyList"></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">
+    <img src="img/logo.jpeg">
+  </div>
+  <div class="footer-info">
+    <strong>Raspada Milionária</strong><br>
+    Plataforma de entretenimento digital.<br>
+    Saques via PIX com processamento automático.<br><br>
+    © 2026 — Todos os direitos reservados.
+  </div>
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2>✅ Saque Concluído</h2>
+    <p id="msg"></p>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){
+  const m=document.getElementById("menu");
+  m.style.display=m.style.display==="block"?"none":"block";
+}
+
+function sacar(){
+  const v=parseFloat(document.getElementById("valor").value);
+  if(v<20){ alert("Saque mínimo R$ 20,00"); return; }
+
+  const d=new Date();
+  const data=d.toLocaleDateString();
+  const hora=d.toLocaleTimeString();
+
+  document.getElementById("msg").innerText =
+    `R$ ${v.toFixed(2)} enviados com sucesso via PIX.`;
+
+  document.getElementById("overlay").style.display="flex";
+
+  const item=document.createElement("div");
+  item.className="history-item";
+  item.innerHTML=`
+    <div>
+      <strong>R$ ${v.toFixed(2)}</strong><br>
+      <small>${data} • ${hora}</small>
+    </div>
+    <div class="status">CONCLUÍDO</div>
+  `;
+
+  document.getElementById("history").style.display="block";
+  document.getElementById("historyList").prepend(item);
+
+  setTimeout(()=>document.getElementById("overlay").style.display="none",4000);
+}
+</script>
+
+</body>
+</html>
